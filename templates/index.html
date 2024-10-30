@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4 container-fluid">
+  <div class="row pt-6 border border-5 border-dark p-4"> <!-- Added border here -->
+    <div class="col-md-6"> <!-- Text column on the left -->
+      <div class="jumbotron p-4">
+        <h1 class="display-2">Fitt-Ed</h1>
+        <p class="lead text-align-center"></p>
+        <p>Workout Creation Tool</p>
+        <hr class="my-4" />
+        
+          <ul>
+            <li class="list-group-item">🏋️ Welcome to Fitt-Ed, the ultimate workout creation tool designed for trainers and fitness enthusiasts alike.<br> Whether you're a beginner or an advanced athlete, we have everything you need to customize and track your workouts effectively.</li>
+            <br>
+            <li class="list-group-item">🫀Join our community of fitness lovers and take your training to the next level.<br> With Fitt-Ed, achieving your fitness goals has never been easier.</li>
+
+          </ul>
+        
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+      </div>
+    </div>
+    <div class="col-md-6"> <!-- Image column on the right -->
+      <img src="/static/bg2.webp" class="img-fluid" id="img-gym" alt="gym" />
+    </div>
+  </div>
+</div>
+
+<hr class="my-4 mt-5"/>
+{% endblock %}

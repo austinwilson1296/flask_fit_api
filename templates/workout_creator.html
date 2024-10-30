@@ -1,0 +1,107 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container-fluid">
+  <!-- Modal for Creating Workout -->
+  <div class="modal fade" id="create-workout-modal" tabindex="-1" role="dialog" aria-labelledby="create-workout-modalLabel" aria-modal="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-title w-100" id="create-workout-modalLabel">Choose Workout Level</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Dropdown for Experience Level -->
+          <div class="dropdown mb-3 text-center">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Experience Level:</button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" hx-get="workout/experience-level/beginner" hx-target="#partial-container" hx-swap="outerHTML">Beginner</a>
+              </li>
+              <li>
+                <a class="dropdown-item" hx-get="workout/experience-level/intermediate" hx-target="#partial-container" hx-swap="outerHTML">Intermediate</a>
+              </li>
+              <li>
+                <a class="dropdown-item" hx-get="workout/experience-level/advanced" hx-target="#partial-container" hx-swap="outerHTML">Advanced</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- HTMX Partial Render -->
+          <div id="partial-container"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row for Timer and Create Workout Button -->
+  <div class="row my-5">
+    <div class="col-md-auto">
+      <button class="btn" data-bs-toggle="modal" data-bs-target="#create-workout-modal">Create Workout</button>
+      <br>
+      <button class="btn" id="startTimerBtn" style="margin-top: 15px;">Start Timer</button>
+      <button class="btn btn-danger mb-2" id="stopTimerBtn" style="display: none;">Stop Timer</button>
+      <div class="timer mt-3">Timer: <span id="timer-display">00:00:00</span></div>
+      
+    </div>
+  </div>
+<div id="workout-clipboard">
+     
+  </div>
+</div>
+
+
+
+<script>
+  // Timer functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const timerDisplay = document.getElementById("timer-display");
+    const startTimerBtn = document.getElementById("startTimerBtn");
+    const stopTimerBtn = document.getElementById("stopTimerBtn");
+    let seconds = 0;
+    let timerInterval;
+
+    // Function to update the timer display
+    function updateTimerDisplay() {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      timerDisplay.textContent = `${String(hours).padStart(2, "0")}:${String(
+        minutes
+      ).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    // Function to start the timer
+    function startTimer() {
+      timerInterval = setInterval(function () {
+        seconds++;
+        updateTimerDisplay();
+      }, 1000);
+
+      startTimerBtn.style.display = "none"; // Hide Start Timer button
+      stopTimerBtn.style.display = "inline-block"; // Show Stop Timer button
+    }
+
+    // Function to stop the timer
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null; // Reset timer interval
+      startTimerBtn.style.display = "inline-block"; // Show Start Timer button
+      stopTimerBtn.style.display = "none"; // Hide Stop Timer button
+    }
+
+    // Event listener for the button to start the timer
+    startTimerBtn.addEventListener("click", function () {
+      if (!timerInterval) {
+        startTimer();
+      }
+    });
+
+    // Event listener for the button to stop the timer
+    stopTimerBtn.addEventListener("click", stopTimer);
+  });
+</script>
+
+{% endblock %}

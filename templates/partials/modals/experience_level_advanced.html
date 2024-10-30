@@ -1,0 +1,45 @@
+<div id="partial-container">
+  <div class="container mt-4">
+    <h5>{{ level }} Level</h5>
+
+    <!-- Properly wrap everything inside the form -->
+    <form method="POST" action="{{ url_for('workout_gen.selection') }}">
+        <!-- Always include CSRF token inside the form -->
+        <input type="hidden" name="experience_level" value="{{ level }}">
+
+      <!-- Workout Type Selection -->
+      <div class="form-group" id="workoutSelection">
+        <label for="workout-type">Select Workout Type:</label>
+        <select class="form-control" id="workout-type" name="workout_type">
+          <option value="Endurance">Endurance/ Fat Loss</option>
+          <option value="Hypertrophy">Hypertrophy</option>
+          <option value="Strength">Strength</option>
+          <option value="Power">Power</option>
+        </select>
+      </div>
+
+
+      <!-- Include Warm-Up Checkbox -->
+      <div class="form-check mt-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="warm_up"
+          id="warm_up"
+        />
+        <label class="form-check-label" for="warm_up">
+          Include a Warm-Up?
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="row mt-3">
+        <div class="col">
+          <button type="submit" class="btn btn-primary w-100">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>  <!-- End form -->
+  </div>
+</div>

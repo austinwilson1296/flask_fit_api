@@ -1,0 +1,61 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+.venv/
+env/
+ENV/
+# VSCode settings
+.vscode/
+
+# IDE settings
+.idea/
+
+# PyCharm files
+*.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment variables and configuration files
+*.env
+*.env.*.local
+
+# Flask instance and cache files
+instance/
+*.log
+*.sqlite3
+*.db
+*.sqlite
+
+# Flask uploads folder
+uploads/
+media/
+static/
+
+# Flask cache directory
+__pycache__/
+
+# Flask migration files
+migrations/
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+*.temp
+
+# Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints
+
+# macOS files
+.DS_Store
+
+# Linux/Mac file permissions
+*.swp
+
+instance/
