@@ -36,15 +36,17 @@
         </div>
 
         <!-- Table spanning 6 columns -->
-        <div class="col-6">
+        <div class="col-3">
             <div class="container">
                 <h5>Warm Up</h5> 
                 <ul class="list-group">
-                    <li class="list-group-item">Item 1 
-                    <li class="list-group-item">Item 2 
-                    <li class="list-group-item">Item 3 
+                    {% for exercise in warm_ex %}
+                    <li class="list-group-item">{{exercise.name}}
+                    {% endfor %}
                 </ul>
             </div>
+        </div>
+        <div class="col-3">
             <div class="container">
                 <h5>Core</h5> 
                 <ul class="list-group">
@@ -69,14 +71,17 @@
                     <li class="list-group-item">Item 3 
                 </ul>
             </div>
+            </div>
+            <div class="col-3">
             <div class="container">
                 <h5>Cool Down</h5> 
                 <ul class="list-group">
-                    <li class="list-group-item">Item 1 
-                    <li class="list-group-item">Item 2 
-                    <li class="list-group-item">Item 3 
+                    {% for ex in cool_ex %}
+                    <li class="list-group-item">{{ex.name}}
+                    {% endfor %}
                 </ul>
             </div>
+        </div>
         </div>
     </div>
 </div>
