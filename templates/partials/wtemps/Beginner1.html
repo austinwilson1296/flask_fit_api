@@ -1,87 +1,103 @@
-<!-- buttons_table_partial.html -->
 <div class="container">
-    <h1 class="h1">Workout || <strong>{{workout_type}}</strong></h1>
+    <h1 class="h1">Workout || <strong>{{ workout_type }}</strong></h1>
     <div class="row">
         <!-- Buttons spanning 6 columns -->
         <div class="col col-md-auto">
             <ul class="list-group">
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
-        
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
-    
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
-    
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
 
-            <li class="list-group-item">An item 
-                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i>
-                </button>|<button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i>
-                </button></li>
+                <!-- Core Section -->
+                <h6>Core</h6>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="core" data-bs-toggle="dropdown" aria-expanded="false">
+                      Select Body Part
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="core">
+                      <li><a class="dropdown-item" href="#" hx-get="/select-category?category=Core" hx-target="#core-exercises">Core</a></li>
+                      <li><a class="dropdown-item" href="#" hx-get="/select-category?category=Lower Back" hx-target="#core-exercises">Lower Back</a></li>
+                    </ul>
+                </div>
+                <div id="core-exercises">
+                    <!-- Core exercises will load here -->
+                </div>
+
+                <!-- Balance Section -->
+                <h6>Balance</h6>
+                <li class="list-group-item">An item 
+                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus fa-2xl" style="color: white;"></i></button> |
+                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-forward-step fa-2xl" style="color: white;"></i></button>
+                </li>
+
+                <!-- Resistance Section -->
+                <h6>Resistance</h6>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="resistance" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Body Part
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="resistance">
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Back" hx-target="#resistance-exercises">Back</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Cardio" hx-target="#resistance-exercises">Cardio</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Chest" hx-target="#resistance-exercises">Chest</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Core" hx-target="#resistance-exercises">Core</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Low Back" hx-target="#resistance-exercises">Low Back</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Legs" hx-target="#resistance-exercises">Legs</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Shoulders" hx-target="#resistance-exercises">Shoulders</a></li>
+                        <li><a class="dropdown-item"  hx-get="/select-category?category=Rear Shoulders" hx-target="#resistance-exercises">Rear Shoulders</a></li>
+                    </ul>
+                </div>
+                <div id="resistance-exercises">
+                    <!-- Resistance exercises will load here -->
+                </div>
+            </ul>
         </div>
+    </div>
 
-        <!-- Table spanning 6 columns -->
-        <div class="col-3">
+    <!-- Exercise Lists -->
+    <div class="row">
+        <div class="col-4">
             <div class="container">
                 <h5>Warm Up</h5> 
                 <ul class="list-group">
                     {% for exercise in warm_ex %}
-                    <li class="list-group-item">{{exercise.name}}
+                    <li class="list-group-item" style="font-size: 25px">{{ exercise.name }}</li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <div class="container">
                 <h5>Core</h5> 
                 <ul class="list-group">
-                    <li class="list-group-item">Item 1 
-                    <li class="list-group-item">Item 2 
-                    <li class="list-group-item">Item 3 
+                    <li class="list-group-item">Item 1</li>
+                    <li class="list-group-item">Item 2</li>
+                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
             <div class="container">
                 <h5>Balance</h5> 
                 <ul class="list-group">
-                    <li class="list-group-item">Item 1 
-                    <li class="list-group-item">Item 2 
-                    <li class="list-group-item">Item 3 
+                    <li class="list-group-item">Item 1</li>
+                    <li class="list-group-item">Item 2</li>
+                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
             <div class="container">
                 <h5>Resistance</h5> 
                 <ul class="list-group">
-                    <li class="list-group-item">Item 1 
-                    <li class="list-group-item">Item 2 
-                    <li class="list-group-item">Item 3 
+                    <li class="list-group-item">Item 1</li>
+                    <li class="list-group-item">Item 2</li>
+                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
-            </div>
-            <div class="col-3">
+        </div>
+        <div class="col-4">
             <div class="container">
                 <h5>Cool Down</h5> 
                 <ul class="list-group">
                     {% for ex in cool_ex %}
-                    <li class="list-group-item">{{ex.name}}
+                    <li class="list-group-item" style="font-size: 25px">{{ ex.name }}</li>
                     {% endfor %}
                 </ul>
             </div>
-        </div>
         </div>
     </div>
 </div>

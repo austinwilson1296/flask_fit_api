@@ -20,21 +20,23 @@ def randomize(level, group):
         return "No exercises found"
 
 
-#Route to add randomized items to list
+@workout_gen.route('/select-category')
+def select_category():
+    category = request.args.get('category')
+    return category or '', 200
 
-@workout_gen.route('/add-to-list', methods=['POST'])
-def add_to_list():
-    # Retrieve the exercise name sent by HTMX
-    exercise = request.form.get('generated-exercise', "No exercise generated")
-
-    # Render and return the exercise wrapped in an <li> element to append to the workout list
-    return render_template_string(
-        '<li>{{ exercise }}</li>',
-        exercise=exercise
-    )
-
-
-#Render partial templates for selection of workout level/type...
+@workout_gen.route('/generate-exercise', methods=['POST'])
+def generate_exercise():
+    category = request.form.get('selected-category-display')
+    if category:
+        exercise = Exercise.query.filter_by(category=category).order_by(func.random()).first()
+        if exercise:
+            return jsonify({
+                'id': exercise.id,
+                'name': exercise.name,
+                'description': exercise.description
+            })
+    return jsonify({'error': 'No exercise found for this category'}), 404
 
 
 @workout_gen.route('/experience-level/<string:level>', methods=['GET'])
@@ -55,21 +57,11 @@ def get_unique_exercise_sequence(
 ) -> Tuple[List[Optional[Exercise]], List[int]]:
     """
     Get a sequence of unique exercises following a specific category order.
-    
-    Args:
-        categories (List[str]): List of category names in desired sequence order
-        exclude_exercise_ids (List[int], optional): List of exercise IDs to exclude
-        
-    Returns:
-        Tuple of (List[Optional[Exercise]], List[int]): 
-        - Exercises in the specified sequence
-        - IDs of selected exercises
     """
     try:
-        # If no exclusion list provided, start with an empty list
         exclude_exercise_ids = exclude_exercise_ids or []
 
-        # Create a query to get random exercises for each category
+        # Create a query to get multiple exercises for each category
         base_query = (
             db.session.query(
                 Exercise.id,
@@ -84,33 +76,42 @@ def get_unique_exercise_sequence(
             .filter(ExerciseCategory.name.in_(categories))
         )
 
-        # Add exclusion filter if we have excluded IDs
+        # Exclude specified exercises
         if exclude_exercise_ids:
             base_query = base_query.filter(~Exercise.id.in_(exclude_exercise_ids))
 
-        # Convert to CTE
         random_exercises = base_query.cte()
 
-        # Query to get one random exercise per category
+        # Get all exercises in pool
         exercise_pool = (
             db.session.query(Exercise)
             .join(random_exercises, Exercise.id == random_exercises.c.id)
-            .filter(random_exercises.c.rn == 1)
             .all()
         )
 
-        # Create a mapping of category name to exercise
-        exercise_map = {
-            ex.category.name: ex for ex in exercise_pool
-        }
+        # Map exercises by category
+        exercise_map = {}
+        for ex in exercise_pool:
+            if ex.category.name not in exercise_map:
+                exercise_map[ex.category.name] = []
+            exercise_map[ex.category.name].append(ex)
 
-        # Build the final sequence maintaining the original order
-        sequence = [exercise_map.get(category) for category in categories]
+        # Build sequence and exclude IDs list
+        sequence = []
+        new_excluded_ids = set(exclude_exercise_ids)
 
-        # Collect IDs of exercises in this sequence
-        new_excluded_ids = [ex.id for ex in sequence if ex is not None]
+        for category in categories:
+            available_exercises = [
+                ex for ex in exercise_map.get(category, []) if ex.id not in new_excluded_ids
+            ]
+            if available_exercises:
+                selected_exercise = available_exercises[0]  # Pick the first unique exercise
+                sequence.append(selected_exercise)
+                new_excluded_ids.add(selected_exercise.id)
+            else:
+                sequence.append(None)  # Handle case if no exercises are available
 
-        return sequence, new_excluded_ids
+        return sequence, list(new_excluded_ids)
         
     except Exception as e:
         db.session.rollback()
