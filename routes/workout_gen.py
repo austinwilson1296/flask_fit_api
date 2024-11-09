@@ -14,6 +14,7 @@ def select_category():
     print(category)
     sub_category = request.args.get('subcategory')
     print(sub_category)
+    type = request.args.get('type')
     
     if category and sub_category:
         # Find the category id based on name and subcategory
@@ -23,11 +24,12 @@ def select_category():
             # Query a random exercise from the selected category
             exercise = Exercise.query.filter_by(category_id=exercise_category.id).order_by(func.random()).first()
             
-            if exercise:
-                return jsonify({
-                    'id': exercise.id,
-                    'name': exercise.name,
-                })
+            if exercise and type == 'core':
+                return f'<h2 id="core">{exercise.name}</h2>'
+            elif exercise and type == 'balance':
+                return f'<h2 id="balance">{exercise.name}</h2>'
+            else:
+                return f'<h2 id="resistance">{exercise.name}</h2>'
     
     # Return an error if no exercise or category found
     return jsonify({'error': 'No exercise found for this category'}), 404

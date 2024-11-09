@@ -9,109 +9,116 @@
             <h6>Core</h6>
             <form hx-post="/workout/add-to-list" hx-target="#core-list" hx-swap="beforeend">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="core" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="core-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Select Body Part
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="core">
+                    <ul class="dropdown-menu" aria-labelledby="core-dropdown">
                         <li>
                             <a class="dropdown-item" 
                             href="#" 
-                            hx-get="/workout/select-category?name=Beginner1&subcategory=CORE" 
+                            hx-get="/workout/select-category?name=Beginner1&subcategory=CORE&type=core" 
+                            hx-swap="innerHTML"
                             hx-target="#core-exercises"
                             hx-trigger="click"
-                            hx-vals='{"category_name": "Beginner1", "subcategory": "CORE"}'
-                            onclick="updateHiddenInputs('Beginner1', 'CORE')">
+                            hx-on::after-request="setExerciseFromH2('core')"
+                            onclick="updateHiddenInputs('core', 'Beginner1', 'CORE')">
                             Core
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" 
                             href="#" 
-                            hx-get="/workout/select-category?name=Lower_back&subcategory=LOWER_BACK" 
+                            hx-get="/workout/select-category?name=Lower_back&subcategory=LOWER_BACK&type=core"
+                            hx-swap="innerHTML" 
                             hx-target="#core-exercises"
                             hx-trigger="click"
-                            hx-vals='{"category_name": "Lower_back", "subcategory": "LOWER_BACK"}'
-                            onclick="updateHiddenInputs('Lower_back', 'LOWER_BACK')">
+                            hx-on::after-request="setExerciseFromH2('core')"
+                            onclick="updateHiddenInputs('core', 'Lower_back', 'LOWER_BACK')">
                             Lower Back
                             </a>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Hidden inputs for form submission -->
-                <input type="hidden" name="category_name" id="category_name" value="">
-                <input type="hidden" name="subcategory" id="subcategory" value="">
-
                 <div id="core-exercises">
                     <!-- Core exercises will load here -->
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add to workout</button>
+                <input type="hidden" name="category_name" id="core_category_name" value="">
+                <input type="hidden" name="subcategory" id="core_subcategory" value="">
+                <input type="hidden" name="exercise_name" id="core_exercise_name" value="">
+
+                <button type="submit" class="btn btn-primary mt-3">Add to Core</button>
             </form>
 
             <!-- Balance Section -->
-            <h6>Balance</h6>
+            <h6 class="mt-4">Balance</h6>
             <form hx-post="/workout/add-to-list" hx-target="#balance-list" hx-swap="beforeend">
-                <ul>
-                    <li>
-                        <a class="item" 
-                        href="#" 
-                        hx-get="/workout/select-category?name=Leg_stable&subcategory=BALANCE" 
-                        hx-target="#balance-exercises"
-                        hx-trigger="click"
-                        hx-vals='{"category_name": "Leg_stable", "subcategory": "BALANCE"}'
-                        onclick="updateHiddenInputs('Leg_stable', 'BALANCE')">
-                        Balance
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Hidden inputs to hold selected values -->
-                <input type="hidden" name="category_name" id="balance_category_name" value="">
-                <input type="hidden" name="subcategory" id="balance_subcategory" value="">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="balance-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Body Part
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="balance-dropdown">
+                        <li>
+                            <a class="dropdown-item" 
+                            href="#" 
+                            hx-get="/workout/select-category?name=Leg_stable&subcategory=BALANCE&type=balance" 
+                            hx-target="#balance-exercises"
+                            hx-trigger="click"
+                            hx-on::after-request="setExerciseFromH2('balance')"
+                            onclick="updateHiddenInputs('balance', 'Leg_stable', 'BALANCE')">
+                            Balance
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
                 <div id="balance-exercises">
                     <!-- Balance exercises will load here -->
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add to workout</button>
+                <input type="hidden" name="category_name" id="balance_category_name" value="">
+                <input type="hidden" name="subcategory" id="balance_subcategory" value="">
+                <input type="hidden" name="exercise_name" id="balance_exercise_name" value="">
+
+                <button type="submit" class="btn btn-primary mt-3">Add to Balance</button>
             </form>
 
             <!-- Resistance Section -->
-            <h6>Resistance</h6>
+            <h6 class="mt-4">Resistance</h6>
             <form hx-post="/workout/add-to-list" hx-target="#resistance-list" hx-swap="beforeend">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="resistance" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="resistance-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Select Body Part
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="resistance">
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=BACK" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "BACK"}' onclick="updateHiddenInputs('Resistance', 'BACK')">Back</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=Cardio" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "Cardio"}' onclick="updateHiddenInputs('Resistance', 'Cardio')">Cardio</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CHEST" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "CHEST"}' onclick="updateHiddenInputs('Resistance', 'CHEST')">Chest</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CORE" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "CORE"}' onclick="updateHiddenInputs('Resistance', 'CORE')">Core</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LOWER_BACK" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "LOWER_BACK"}' onclick="updateHiddenInputs('Resistance', 'LOWER_BACK')">Low Back</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LEGS" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "LEGS"}' onclick="updateHiddenInputs('Resistance', 'LEGS')">Legs</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Shoulders&subcategory=ARMS" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "Shoulders"}' onclick="updateHiddenInputs('Resistance', 'Shoulders')">Shoulders</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Rear_shoulders&subcategory=ARMS" hx-target="#resistance-exercises" hx-vals='{"category_name": "Resistance", "subcategory": "Rear_shoulders"}' onclick="updateHiddenInputs('Resistance', 'Rear_shoulders')">Rear Shoulders</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="resistance-dropdown">
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=BACK&type=resistance" hx-swap="innerHTML" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'BACK')">Back</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=Cardio&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'Cardio')">Cardio</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CHEST&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CHEST')">Chest</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CORE&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CORE')">Core</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LOWER_BACK&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LOWER_BACK')">Low Back</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LEGS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LEGS')">Legs</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Shoulders&subcategory=ARMS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'ARMS')">Shoulders</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Rear_shoulders&subcategory=ARMS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'ARMS')">Rear Shoulders</a></li>
                     </ul>
                 </div>
-
-                <!-- Hidden inputs to hold selected values -->
-                <input type="hidden" name="category_name" id="resistance_category_name" value="">
-                <input type="hidden" name="subcategory" id="resistance_subcategory" value="">
 
                 <div id="resistance-exercises">
                     <!-- Resistance exercises will load here -->
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add to workout</button>
+                <input type="hidden" name="category_name" id="resistance_category_name" value="">
+                <input type="hidden" name="subcategory" id="resistance_subcategory" value="">
+                <input type="hidden" name="exercise_name" id="resistance_exercise_name" value="">
+
+                <button type="submit" class="btn btn-primary mt-3">Add to Resistance</button>
             </form>
             </ul>
         </div>
     </div>
 
     <!-- Exercise Lists -->
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-4">
             <div class="container">
                 <h5>Warm Up</h5> 
@@ -126,25 +133,16 @@
             <div class="container">
                 <h5>Core</h5> 
                 <ul class="list-group" id="core-list">
-                    <li class="list-group-item">Item 1</li>
-                    <li class="list-group-item">Item 2</li>
-                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
-            <div class="container">
+            <div class="container mt-3">
                 <h5>Balance</h5> 
                 <ul class="list-group" id="balance-list">
-                    <li class="list-group-item">Item 1</li>
-                    <li class="list-group-item">Item 2</li>
-                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
-            <div class="container">
+            <div class="container mt-3">
                 <h5>Resistance</h5> 
                 <ul class="list-group" id="resistance-list">
-                    <li class="list-group-item">Item 1</li>
-                    <li class="list-group-item">Item 2</li>
-                    <li class="list-group-item">Item 3</li>
                 </ul>
             </div>
         </div>
@@ -162,16 +160,42 @@
 </div>
 
 <script>
-    function updateHiddenInputs(category, subcategory) {
-        // Update hidden input values with the selected category and subcategory
-        document.getElementById("category_name").value = category;
-        document.getElementById("subcategory").value = subcategory;
-
-        // You can repeat this for the other categories as well (balance, resistance, etc.)
-        document.getElementById("balance_category_name").value = category;
-        document.getElementById("balance_subcategory").value = subcategory;
-
-        document.getElementById("resistance_category_name").value = category;
-        document.getElementById("resistance_subcategory").value = subcategory;
+    // Function to update hidden inputs for category and subcategory
+    function updateHiddenInputs(section, category, subcategory) {
+        document.getElementById(`${section}_category_name`).value = category;
+        document.getElementById(`${section}_subcategory`).value = subcategory;
     }
+
+    // Function to set the exercise name from the h2 element
+    function setExerciseFromH2(section) {
+        setTimeout(() => {
+            const exerciseContainer = document.getElementById(`${section}-exercises`);
+            // Use the section name as the h2 id
+            const h2Element = exerciseContainer.querySelector(`h2#${section}`);
+            if (h2Element) {
+                const exerciseName = h2Element.textContent.trim();
+                document.getElementById(`${section}_exercise_name`).value = exerciseName;
+                
+                // Add visual feedback
+                h2Element.style.backgroundColor = '#e9ecef';
+                h2Element.style.padding = '0.5rem';
+                h2Element.style.borderRadius = '0.25rem';
+            }
+        }, 100);
+    }
+
+    // Handle form submissions
+    document.addEventListener('htmx:afterRequest', function(event) {
+        const sections = ['core', 'balance', 'resistance'];
+        sections.forEach(section => {
+            if (event.detail.target.id === `${section}-list` && event.detail.successful) {
+                // Clear the exercise selection
+                document.getElementById(`${section}_exercise_name`).value = '';
+                document.getElementById(`${section}-exercises`).innerHTML = '';
+                
+                // Reset the dropdown button text
+                document.getElementById(`${section}-dropdown`).textContent = 'Select Body Part';
+            }
+        });
+    });
 </script>
