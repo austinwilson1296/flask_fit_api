@@ -6,37 +6,32 @@ from models import db, Exercise, ExerciseCategory
 # Define the blueprint
 workout_gen = Blueprint('workout_gen', __name__)
 
-@workout_gen.route('/<string:level>/<string:group>', methods=['GET'])
-def randomize(level, group):
-    # Query for a random exercise based on level and group
-    exercise = db.session.query(Exercise).join(ExerciseCategory).filter(
-        (ExerciseCategory.name == group) | (ExerciseCategory.subcategory == group)
-    ).order_by(func.random()).first()
-
-    # Return the exercise name if found, otherwise a default message
-    if exercise:
-        return exercise.name
-    else:
-        return "No exercises found"
-
 
 @workout_gen.route('/select-category')
 def select_category():
-    category = request.args.get('category')
-    return category or '', 200
-
-@workout_gen.route('/generate-exercise', methods=['POST'])
-def generate_exercise():
-    category = request.form.get('selected-category-display')
-    if category:
-        exercise = Exercise.query.filter_by(category=category).order_by(func.random()).first()
-        if exercise:
-            return jsonify({
-                'id': exercise.id,
-                'name': exercise.name,
-                'description': exercise.description
-            })
+    # Get the selected category and subcategory from the request
+    category = request.args.get('name')
+    print(category)
+    sub_category = request.args.get('subcategory')
+    print(sub_category)
+    
+    if category and sub_category:
+        # Find the category id based on name and subcategory
+        exercise_category = ExerciseCategory.query.filter_by(name=category, subcategory=sub_category).first()
+        
+        if exercise_category:
+            # Query a random exercise from the selected category
+            exercise = Exercise.query.filter_by(category_id=exercise_category.id).order_by(func.random()).first()
+            
+            if exercise:
+                return jsonify({
+                    'id': exercise.id,
+                    'name': exercise.name,
+                })
+    
+    # Return an error if no exercise or category found
     return jsonify({'error': 'No exercise found for this category'}), 404
+
 
 
 @workout_gen.route('/experience-level/<string:level>', methods=['GET'])
@@ -188,6 +183,21 @@ def selection():
         current_app.logger.error(f"Error in workout selection: {str(e)}")
         return jsonify({'error': 'Failed to generate workout'}), 500
 
+
+@workout_gen.route('/add-to-list', methods=['POST'])
+def add_to_list():
+    category_name = request.form.get('category_name')
+    subcategory = request.form.get('subcategory')
+    exercise_name = request.form.get('exercise_name')
+    
+
+    # Here you can process adding the exercise to the workout (e.g., save to session or database)
+    # For this example, let's just return the selected exercise as a response
+    return jsonify({
+        "category_name": category_name,
+        "subcategory": subcategory,
+        "exercise_name": exercise_name
+    })
     
 
 
