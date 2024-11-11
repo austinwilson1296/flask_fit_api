@@ -188,18 +188,10 @@ def selection():
 
 @workout_gen.route('/add-to-list', methods=['POST'])
 def add_to_list():
-    category_name = request.form.get('category_name')
     subcategory = request.form.get('subcategory')
     exercise_name = request.form.get('exercise_name')
-    
 
-    # Here you can process adding the exercise to the workout (e.g., save to session or database)
-    # For this example, let's just return the selected exercise as a response
-    return jsonify({
-        "category_name": category_name,
-        "subcategory": subcategory,
-        "exercise_name": exercise_name
-    })
+    return f'<li class="list-group-item"> {subcategory} | {exercise_name} </li>'
     
 
 

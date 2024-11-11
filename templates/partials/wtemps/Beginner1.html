@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="h1">Workout || <strong>{{ workout_type }}</strong></h1>
-    <div class="row">
+    <div class="row mt-4">
         <!-- Buttons spanning 6 columns -->
-        <div class="col col-md-auto">
+        <div class="col-3">
             <ul class="list-group">
 
             <!-- Core Section -->
@@ -92,12 +92,12 @@
                         Select Body Part
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="resistance-dropdown">
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=BACK&type=resistance" hx-swap="innerHTML" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'BACK')">Back</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=Cardio&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'Cardio')">Cardio</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CHEST&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CHEST')">Chest</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=CORE&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CORE')">Core</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LOWER_BACK&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LOWER_BACK')">Low Back</a></li>
-                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?subcategory=LEGS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LEGS')">Legs</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Beginner1&subcategory=BACK&type=resistance" hx-swap="innerHTML" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'BACK')">Back</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Beginner1&subcategory=Cardio&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'Cardio')">Cardio</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Beginner1&subcategory=CHEST&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CHEST')">Chest</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Beginner1&subcategory=CORE&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'CORE')">Core</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Lower_back&subcategory=LOWER_BACK&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LOWER_BACK')">Low Back</a></li>
+                        <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Beginner1&subcategory=LEGS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'LEGS')">Legs</a></li>
                         <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Shoulders&subcategory=ARMS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'ARMS')">Shoulders</a></li>
                         <li><a class="dropdown-item" href="#" hx-get="/workout/select-category?name=Rear_shoulders&subcategory=ARMS&type=resistance" hx-target="#resistance-exercises" hx-on::after-request="setExerciseFromH2('resistance')" onclick="updateHiddenInputs('resistance', 'Resistance', 'ARMS')">Rear Shoulders</a></li>
                     </ul>
@@ -115,11 +115,10 @@
             </form>
             </ul>
         </div>
-    </div>
 
     <!-- Exercise Lists -->
-    <div class="row mt-4">
-        <div class="col-4">
+
+        <div class="col-3">
             <div class="container">
                 <h5>Warm Up</h5> 
                 <ul class="list-group">
@@ -129,7 +128,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="container">
                 <h5>Core</h5> 
                 <ul class="list-group" id="core-list">
@@ -146,7 +145,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="container">
                 <h5>Cool Down</h5> 
                 <ul class="list-group">
