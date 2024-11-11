@@ -1,7 +1,9 @@
-from flask import Blueprint, request, render_template, jsonify, current_app
+from flask import Blueprint, request, render_template, jsonify, current_app,flash
 from sqlalchemy import func
 from typing import List, Optional, Tuple
 from models import db, Exercise, ExerciseCategory
+import urllib.parse
+import uuid
 
 # Define the blueprint
 workout_gen = Blueprint('workout_gen', __name__)
@@ -191,7 +193,36 @@ def add_to_list():
     subcategory = request.form.get('subcategory')
     exercise_name = request.form.get('exercise_name')
 
-    return f'<li class="list-group-item"> {subcategory} | {exercise_name} </li>'
+    # Generate a unique ID for the list item
+    unique_id = str(uuid.uuid4())
+
+    # Encode the exercise name to safely include it in the URL
+    ex_decode = urllib.parse.quote(exercise_name)
+
+    # Construct the URL for deletion
+    delete_action = f'/workout/{subcategory}/{ex_decode}/delete'
+
+    return f'''
+        <li id="{unique_id}" class="list-group-item">
+            {subcategory} | {exercise_name}
+            <button class="btn btn-danger btn-sm float-end" 
+                hx-delete="{delete_action}" 
+                hx-target="#{unique_id}" 
+                hx-swap="outerHTML">
+                Delete
+            </button>
+        </li>
+    '''
+
+@workout_gen.route('<subcategory>/<exercise_name>/delete', methods=['DELETE'])
+def delete_exercise(subcategory, exercise_name):
+
+    # Handle deletion logic (e.g., remove the exercise from the database or list)
+    print(f"Deleting exercise: {subcategory} | {exercise_name}")
+    
+    # Return a JSON response to allow the client to remove the element from the DOM
+    return '',204
+
     
 
 

@@ -7,7 +7,9 @@ app.register_blueprint(workout_gen,url_prefix='/workout')
 
 
 app.secret_key = 'your_secret_key_here'  # Replace with a strong secret key
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fitted.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/fitted.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db.init_app(app)
 
